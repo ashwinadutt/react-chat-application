@@ -9,8 +9,17 @@ const ChatFeed = (props) => {
 
     if(!chat) return 'Loading...'
 
+    const updateScroll = () => {
+        var element = document.querySelector('.chat-feed');
+        
+        if(element)
+            element.scrollTop = element.scrollHeight
+    }
+
     console.log(chat);
     const renderMessages = () => {
+
+        
     
         const keys = Object.keys(messages);
 
@@ -26,7 +35,9 @@ const ChatFeed = (props) => {
                 />               
             ));
         } 
-    
+        
+        updateScroll();
+        
         return keys.map((key, index) => {
             const message = messages[key];
             const lastMessageKey = index === 0 ? null : keys[index - 1];
@@ -53,17 +64,18 @@ const ChatFeed = (props) => {
     }
 
     return (
-        <div className='chat-title-container'>
-           <div className='chat-tite'>{chat.title}</div>
-           <div className='chat-subtitle'>
-               {chat.people.map(person => `${person.person.username} `)}
-           </div>
-           {renderMessages()}
-           <div style={{height: '100px'}} /> 
-           <div className='message-form-container'>
-               <MessageForm {...props} chatId={activeChat} chat={chat} />
-           </div>
-           
+        <div class="chat-feed">
+            <div className='chat-title-container'>
+                <div className='chat-tite'>{chat.title}</div>
+                <div className='chat-subtitle'>
+                    {chat.people.map(person => `${person.person.username} `)}
+                </div>
+                {renderMessages()}
+                <div style={{height: '100px'}} /> 
+                <div className='message-form-container'>
+                    <MessageForm {...props} chatId={activeChat} chat={chat} />
+                </div>
+            </div>
         </div>
     )
 }
