@@ -34,6 +34,7 @@ const LoginForm = () => {
         <div className='wrapper'>
             <div className='form'>
                 <h1 className='title'>React Chat App</h1>
+                <h3 className='sub-title'>(Try logging in as user: admin or tom with password: abcdefg)</h3>
                 <form onSubmit={handleSubmit}>
                     <input type='text' value={username} onChange={(e => setUsername(e.target.value))} required className='input' placeholder='Username' />
                     <input type='password' value={password} onChange={(e => setPassword(e.target.value))} required className='input' placeholder='Password' />

@@ -1,13 +1,14 @@
 import MessageForm from './MessageForm'
 import MyMessage from './MyMessage';
 import TheirMessage from './TheirMessage';
+import { LogoutOutlined } from '@ant-design/icons'
 
 const ChatFeed = (props) => {
     const { userName, chats, activeChat, messages} = props;
 
     const chat = chats && chats[activeChat];
 
-    if(!chat) return 'Loading...'
+    if(!chat) return ' Loading...'
 
     const updateScroll = () => {
         var element = document.querySelector('.chat-feed');
@@ -16,7 +17,14 @@ const ChatFeed = (props) => {
             element.scrollTop = element.scrollHeight
     }
 
-    console.log(chat);
+    const handleLogout = (e) => {
+        e.preventDefault();
+
+        localStorage.removeItem('username');
+        localStorage.removeItem('password');
+        window.location.reload();
+    }
+
     const renderMessages = () => {
 
         
@@ -66,15 +74,18 @@ const ChatFeed = (props) => {
     return (
         <div class="chat-feed">
             <div className='chat-title-container'>
-                <div className='chat-tite'>{chat.title}</div>
-                <div className='chat-subtitle'>
-                    {chat.people.map(person => `${person.person.username} `)}
-                </div>
-                {renderMessages()}
-                <div style={{height: '100px'}} /> 
-                <div className='message-form-container'>
-                    <MessageForm {...props} chatId={activeChat} chat={chat} />
-                </div>
+            <div className='chat-tite' >
+                {chat.title}
+                <button title='logout' className='logout-button' onClick={handleLogout}><LogoutOutlined  /></button>                
+            </div>
+            <div className='chat-subtitle'>
+                {chat.people.map(person => `${person.person.username} `)}
+            </div>
+            {renderMessages()}
+            <div style={{height: '100px'}} /> 
+            <div className='message-form-container'>
+                <MessageForm {...props} chatId={activeChat} chat={chat} />
+            </div>
             </div>
         </div>
     )
